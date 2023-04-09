@@ -1,0 +1,250 @@
+{% extends 'partial/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block 'meta' %} 
+
+<title> </title>
+
+<meta name="description" content="{% if post.meta_description %} {{ post.seo_description }} {% else %} {{ myPost.content | truncatechars:200 }} {% endif %}">
+
+
+{% endblock 'meta' %}
+{% block content %}
+
+        <section class="section wb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-title-area">
+                                <span class="color-green"><a href="garden-category.html" title="">Gardening</a></span>
+
+                                <h3>{{post.post_title}}</h3>
+
+                                <div class="blog-meta big-meta">
+                                    <small><a href="garden-single.html" title="">{{post.post_date}}</a></small>
+                                    <small><a href="blog-author.html" title="">by {{post.post_author}}</a></small>
+                                    <small><a href="#" title=""><i class="fa fa-eye"></i> {{post.views}}</a></small>
+                                </div><!-- end meta -->
+
+                                <div class="post-sharing">
+                                    <ul class="list-inline">
+                                        <li><a href="{{blog.facebook_url}}" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
+                                        <li><a href="{{blog.twitter_url}}" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                                        <li><a href="{{blog.google_url}}" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                    <script>
+                                        var a2a_config = a2a_config || {};
+                                        a2a_config.onclick = 1;
+
+                                    </script>
+                                </div><!-- end post-sharing -->
+                            </div><!-- end title -->
+
+                            <div class="single-post-media">
+                                <img src="#" alt="" class="img-">
+                            </div><!-- end media -->
+
+                            <div class="blog-content">  
+                            {{post.post_content | safe}}
+                               
+                            </div><!-- end content -->
+
+                            <div class="blog-title-area">
+                                <div class="tag-cloud-single">
+                                    <span>Tags</span>
+                                    {% for tag in post.tags.all %}
+                                    <small><a href="#" title="">{{ tag.name }}</a></small>
+                                    {% endfor %}
+                                </div><!-- end meta -->
+
+                                <div class="post-sharing">
+                                    <ul class="list-inline">
+                                        <li><a href="{{blog.facebook_url}}" class="fb-button btn btn-primary"><i class="fa fa-facebook"></i> <span class="down-mobile">Share on Facebook</span></a></li>
+                                        <li><a href="{{blog.twitter_url}}" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i> <span class="down-mobile">Tweet on Twitter</span></a></li>
+                                        <li><a href="{{blog.google_url}}" class="gp-button btn btn-primary"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div><!-- end post-sharing -->
+                            </div><!-- end title -->
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="banner-spot clearfix">
+                                        <div class="banner-img">
+                                            <img src="upload/banner_01.jpg" alt="" class="img-fluid">
+                                        </div><!-- end banner-img -->
+                                    </div><!-- end banner -->
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox authorbox clearfix">
+                                <h4 class="small-title">About author</h4>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                        <img src="upload/author.jpg" alt="" class="img-fluid rounded-circle"> 
+                                    </div><!-- end col -->
+
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                        <h4><a href="#">{{post.post_author}}</a></h4>
+                                        <p>Quisque sed tristique felis. Lorem <a href="#">visit my website</a> amet, consectetur adipiscing elit. Phasellus quis mi auctor, tincidunt nisl eget, finibus odio. Duis tempus elit quis risus congue feugiat. Thanks for stop Forest Time!</p>
+
+                                        <div class="topsocial">
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Website"><i class="fa fa-link"></i></a>
+                                        </div><!-- end social -->
+
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end author-box -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">You may also like</h4>
+                                <div class="row">
+                                    {% for post in all_post %}
+                                    <div class="col-lg-6">
+                                        <div class="blog-box">
+                                            <div class="post-media">
+                                                <a href="garden-single.html" title="">
+                                                    <img src="{{post.post_image.url}}" alt="" class="img-fluid">
+                                                    <div class="hovereffect">
+                                                        <span class=""></span>
+                                                    </div><!-- end hover -->
+                                                </a>
+                                            </div><!-- end media -->
+                                            <div class="blog-meta">
+                                                <h4><a href="{%url 'single' post.slug%}" title="">{{post.post_title}}</a></h4>
+                                                <small><a href="blog-category-01.html" title="">Trends</a></small>
+                                                <small><a href="blog-category-01.html" title="">{{post.post_date}}</a></small>
+                                            </div><!-- end meta -->
+                                        </div><!-- end blog-box -->
+                                    </div><!-- end col -->
+                                {% endfor %}
+                                </div><!-- end row -->
+                            </div><!-- end custom-box -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                {% if comments.count > 1 %}
+                                {% with comments.count as total_comments %}
+                                <h4 class="small-title">{{tottal_comments}} Comments</h4>
+                                {% endwith %}
+                                {% else %}
+
+                                <h4>No comments yet! Be the first to comment.</h4>
+                                {% endif %} 
+
+                                {% for comment in comments %}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comments-list">
+                                            <div class="media">
+                                                <a class="media-left" href="#">
+                                                    <img src="upload/author.jpg" alt="" class="rounded-circle">
+                                                </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading user_name">{{comment.name}} <small>{{comment.created}}</small></h4>
+                                                    <p>{{ comment.body | linebreaks }}</p>
+                                                    <a href="#" class="btn btn-primary btn-sm">Reply</a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                                {% endfor %}
+                            </div><!-- end custom-box -->
+
+                            <hr class="invis1">
+
+                            <div class="custombox clearfix">
+                                {% if new_comment %}
+                                <div class="alert alert-success" role="alert">
+                                    Your comment is awaiting moderation
+                                </div>
+                                {% else %}
+                                <h4 class="small-title">Leave a Reply</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form method="post" style="margin-top: 1.3em;">
+                                            {{ comment_form | crispy }}
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+                                   </form>
+                                   {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end page-wrapper -->
+                    </div><!-- end col -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <h2 class="widget-title">Search</h2>
+                                <form class="form-inline search-form" action="" method="GET">
+                                    <div class="form-group">
+                                        <input type="text" name= "search" class="form-control" placeholder="Search on the site">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- end widget -->
+
+                            <div class="widget">
+                                <h2 class="widget-title">Recent Posts</h2>
+                                <div class="blog-list-widget">
+                                    <div class="list-group">
+                                        {% for recent in all_post %}
+                                        <a href="{%url 'single' recent.slug%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                            <div class="w-100 justify-content-between">
+                                                <img src="{{recent.post_image.url}}" alt="" class="img-fluid float-left">
+                                                <h5 class="mb-1">{{recent.post_title}}</h5>
+                                                <small>{{recent.post_date}}</small>
+                                            </div>
+                                        </a>
+                                        {% endfor %}
+                                    </div>
+                                </div><!-- end blog-list -->
+                            </div><!-- end widget -->
+
+    
+
+                            <div class="widget">
+                                <h2 class="widget-title">Popular Categories</h2>
+                                {% for category in all_category %}
+                                <div class="link-widget">
+                                    <ul>
+                                        <li><a href="#">{{category.category_name}} <span>(21)</span></a></li>
+                                    </ul>
+                                </div><!-- end link-widget -->
+                                {% endfor %}
+                            </div><!-- end widget -->
+                        </div><!-- end sidebar -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+
+
+        
+    </div><!-- end wrapper -->
+
+    <!-- Core JavaScript
+    ================================================== -->
+    <script src="js/jquery.min.js"></>
+    <script src="js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+
+</body>
+</html>
+{% endblock content %}

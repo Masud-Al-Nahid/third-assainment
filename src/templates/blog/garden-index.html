@@ -1,0 +1,195 @@
+{% extends 'partial/base.html' %}
+{% load static %}
+
+{% block 'meta' %} 
+
+<title>{{blog.blog_name}}</title>
+<meta name="description" content="{{ blog.blog_descriptions }}">
+
+{% endblock 'meta' %}
+
+{% block content %}
+
+        <section class="section first-section">
+            <div class="container-fluid">
+                <div class="masonry-blog clearfix">
+                    <div class="left-side">
+                        <div class="masonry-box post-media">
+                             <img src="{{featured_one.post_image.url}}" alt="" class="img-fluid">
+                             <div class="shadoweffect">
+                                <div class="shadow-desc">
+                                    <div class="blog-meta">
+                                        <span class="bg-aqua"><a href="{{featured_one.category.post_slug}}" title="">Gardening</a></span>
+                                        <h4><a href="{% url 'single' featured_one.slug%}" title="">{{featured_one.post_title }}</a></h4>
+                                        <small><a href="{% url 'single' featured_one.slug%}" title="">{{featured_one.mod_post}}</a></small>
+                                        <small><a href="#" title="">by {{featured_one.post_author}}</a></small>
+                                    </div><!-- end meta -->
+                                </div><!-- end shadow-desc -->
+                            </div><!-- end shadow -->
+                        </div><!-- end post-media -->
+                    </div><!-- end left-side -->
+
+                    <div class="center-side">
+                        <div class="masonry-box post-media">
+                             <img src="{{featured_two.post_image.url}}" alt="" class="img-fluid">
+                             <div class="shadoweffect">
+                                <div class="shadow-desc">
+                                    <div class="blog-meta">
+                                        <span class="bg-aqua"><a href="{{featured_two.category.category_slug}}" title="">Outdoor</a></span>
+                                        <h4><a href="{% url 'single' featured_two.slug%}" title="">{{featured_two.post_title }}</a></h4>
+                                        <small><a href="{% url 'single' featured_two.slug%}" title="">{{featured_two.mod_post}}</a></small>
+                                        <small><a href="#" title="">by {{featured_two.post_author}}</a></small>
+                                    </div><!-- end meta -->
+                                </div><!-- end shadow-desc -->
+                            </div><!-- end shadow -->
+                        </div><!-- end post-media -->
+                    </div><!-- end left-side -->
+
+                    <div class="right-side hidden-md-down">
+                        <div class="masonry-box post-media">
+                             <img src="{{featured_three.post_image.url}}" alt="" class="img-fluid">
+                             <div class="shadoweffect">
+                                <div class="shadow-desc">
+                                    <div class="blog-meta">
+                                        <span class="bg-aqua"><a href="{{featured_three.category.category_slug}}" title="">Indoor</a></span>
+                                        <h4><a href="{% url 'single' featured_three.slug %}" title="">{{featured_three.post_title}}</a></h4>
+                                        <small><a href="{% url 'single' featured_three.slug %}" title="">{{featured_three.mod_post}}</a></small>
+                                        <small><a href="#" title="">by {{featured_two.post_author}}</a></small>
+                                    </div><!-- end meta -->
+                                </div><!-- end shadow-desc -->
+                             </div><!-- end shadow -->
+                        </div><!-- end post-media -->
+                    </div><!-- end right-side -->
+                </div><!-- end masonry -->
+            </div>
+        </section>
+
+        <section class="section wb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-list clearfix">
+                                {% for post in posts %}
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="{% url 'single' post.slug %}" title="">
+                                                <img src="{{post.post_image.url}}" alt="" class="img-fluid">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <span class="bg-aqua"><a href="garden-category.html" title="">Indoor</a></span>
+                                        <h4><a href="{{post.slug}}" title="">{{post.post_title}}</a></h4>
+                                        <p>{{post.post_content | truncatechars:300 | safe | striptags}}</p>
+                                        <small><a href="garden-category.html" title=""><i class="fa fa-eye"></i> {{post.views}}</a></small>
+                                        <small><a href="garden-single.html" title="">{{post.post_date}}</a></small>
+                                        <small><a href="#" title="">by {{post.post_author}}</a></small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+                                {% endfor %}
+                                <hr class="invis">
+                            </div><!-- end blog-list -->
+                        </div><!-- end page-wrapper -->
+
+                        <hr class="invis">
+                        <!--pagination section start-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center">
+                                        {% if posts.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{posts.previous_page_number}}">Previous</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link">Previous</a>
+                                        </li>
+                                        {% endif %}
+
+                                        {% for i in posts.paginator.page_range %}
+                                        {% if posts.page_number == i %}
+                                        <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                                        {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                                        {% endif %}
+                                        {% endfor %}
+
+                                        {% if posts.has_next %}
+                                        <li class="page-item active">
+                                            <a class="page-link" href="?page={{posts.next_page_number}}">Next</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <a class="page-link">Next</a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+                    </div><!-- end col -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <h2 class="widget-title">Search</h2>
+                                <form class="form-inline search-form" action= "" method="GET">
+                                    <div class="form-group">
+                                        <input type="text" name= "search" class="form-control" placeholder="Search on the site">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div><!-- end widget -->
+
+                            <div class="widget">
+                                <h2 class="widget-title">Recent Posts</h2>
+                                {% for recent_posts in posts %}
+                                <div class="blog-list-widget">
+                                    <div class="list-group">
+                                        <a href="{% url 'single' recent_posts.slug%}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                            <div class="w-100 justify-content-between">
+                                                <img src="{{recent_posts.post_image.url}}" alt="" class="img-fluid float-left">
+                                                <h5 class="mb-1">{{recent_posts.post_title}}</h5>
+                                                <small>{{recent_posts.post_date}}</small>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div><!-- end blog-list -->
+                                {% endfor %}
+                            </div><!-- end widget -->
+
+
+                            <div class="widget">
+                                <h2 class="widget-title">Popular Categories</h2>
+                                {% for category  in categories %}
+                                <div class="link-widget">
+                                    <ul>
+                                        <li><a href="#">{{category.category_name}} <span>(21)</span></a></li>
+                                    </ul>
+                                </div><!-- end link-widget -->
+                                {% endfor %}
+                            </div><!-- end widget -->
+                        </div><!-- end sidebar -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+
+        
+
+    </div><!-- end wrapper -->
+
+    <!-- Core JavaScript
+    ================================================== -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/tether.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+</html>
+{% endblock content %}
